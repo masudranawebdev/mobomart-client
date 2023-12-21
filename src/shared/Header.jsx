@@ -56,12 +56,12 @@ const Header = () => {
               <GiBeachBag className="w-6 h-6 text-white" />
               <span className="absolute top-1/2 right-1/2 bg-indigo-500 w-5 h-5 flex items-center justify-center text-white rounded-full">0</span>
             </Link>
-            <Link to="/login" className="relative inline-flex items-center justify-center p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out rounded-full shadow hover:ring-1 hover:ring-purple-500">
+            <Link to="/sign-in" className="relative inline-flex items-center justify-center p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out rounded-full shadow hover:ring-1 hover:ring-purple-500">
               <FiUser className="w-6 h-6 text-white" />
             </Link>
           </div>
           {/* mobile navber */}
-          <div className="fixed bottom-0 left-0 px-5 py-2 lg:hidden bg-primary flex justify-between w-full gap-3">
+          <div className="fixed bottom-0 left-0 px-5 py-2 lg:hidden flex justify-between w-full gap-3 bg-primaryColor">
             <div className="flex flex-col items-center">
               <FiGift className="w-4 h-4" />
               <div>
@@ -71,16 +71,16 @@ const Header = () => {
             <div className="flex flex-col items-center">
               <FcFlashOn className="w-4 h-4 animate-pulse" />
               <div>
-                <h2 className="text-[12px] font-normal">Desktop Deal</h2>
+                <h2 className="text-[12px] font-normal">Mobile Deal</h2>
               </div>
             </div>
             <Link href="/pcbuilder" className="flex flex-col items-center">
               <BiSolidMessageAltAdd className="w-4 h-4" />
               <div>
-                <h2 className="text-[12px] font-normal">Pc builder</h2>
+                <h2 className="text-[12px] font-normal">Buy Mobile</h2>
               </div>
             </Link>
-            <Link href="/login" className="flex flex-col items-center">
+            <Link href="/sigin" className="flex flex-col items-center">
               <FiUser className="w-4 h-4" />
               <div>
                 <h2 className="text-[12px] font-normal">Account</h2>
