@@ -26,6 +26,7 @@ const SignIn = () => {
     signIn(data?.email, data?.password)
       .then((result) => {
         // const user = result.user;
+        // console.log(user);
         navigate(from, { replace: true });
         setLoading(false);
       })
@@ -46,8 +47,8 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex justify-center items-center my-14">
-      <div className="w-96 my-10 border rounded bg-slate-50 px-10 pb-5">
+    <div className="flex justify-center items-center min-h-screen px-3 md:px-0">
+      <div className="w-full md:w-96 my-3 md:my-10 border rounded bg-slate-50 px-3 md:px-10 p-5">
         <h2 className="text-2xl text-center text-gray-900 my-4 font-bold border-b pb-2">
           Please Login
         </h2>

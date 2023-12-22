@@ -8,13 +8,16 @@ import {
   getUniqueOs,
   getUniqueProcessor,
   getUniqueStatus,
+  getUniqueType,
 } from "../../utils/uniqueArr";
 import { useState } from "react";
 import { useDebounced } from "../../redux/hooks";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProductNotFound from "../../components/product-not-found/ProductNotFound";
 import Loader from "../../components/loader/Loader";
 import PriceRangeFilter from "../../components/priceRange/PriceRangeFilter";
+import { addToCart } from "../../redux/features/cartSlice";
+import toast from "react-hot-toast";
 const Home = () => {
   const searchTerm = useSelector((state) => state.search.searchTerm);
   const [selectedStatuses, setSelectedStatuses] = useState([]);
@@ -22,16 +25,21 @@ const Home = () => {
   const [selectedProcessors, setSelectedProcessors] = useState([]);
   const [selectedMemories, setSelectedMemories] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
+  const [selectedTypes, setSelectedTypes] = useState([]);
   const [selectedSort, setSelectedSort] = useState("");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [show, setShow] = useState(10);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(200000);
+  const dispatch = useDispatch();
   const query = {};
   query["status"] = selectedStatuses;
+  query["limit"] = show;
   query["os"] = selectedOs;
   query["processor"] = selectedProcessors;
   query["memory"] = selectedMemories;
   query["brand"] = selectedBrands;
+  query["type"] = selectedTypes;
   if (selectedSort) {
     query["sortBy"] = "price";
   }
@@ -54,6 +62,7 @@ const Home = () => {
   const memories = getUniqueMemory(allData?.allMobiles?.data);
   const oses = getUniqueOs(allData?.allMobiles?.data);
   const statuses = getUniqueStatus(allData?.allMobiles?.data);
+  const types = getUniqueType(allData?.allMobiles?.data);
 
   const handleCheckboxStatusChange = (value) => {
     const updatedStatuses = selectedStatuses.includes(value)
@@ -89,17 +98,22 @@ const Home = () => {
       : [...selectedBrands, value];
     setSelectedBrands(updatedBrand);
   };
+  const handleCheckboxTypeChange = (value) => {
+    const updatedType = selectedTypes.includes(value)
+      ? selectedTypes.filter((type) => type !== value)
+      : [...selectedTypes, value];
+    setSelectedTypes(updatedType);
+  };
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
 
-  console.log({ minPrice, maxPrice });
   const handlePriceChange = (range) => {
     setMinPrice(range.min);
     setMaxPrice(range.max);
-    // You can use the range values to filter your products
   };
+
   return (
     <div className="min-h-screen grid grid-cols-5 gap-5 container my-10">
       {/* left side */}
@@ -186,6 +200,22 @@ const Home = () => {
                   }
                 />
                 <span>{processor.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* types */}
+        <div className="bg-[#F5F5F5] p-4 rounded-sm">
+          <h3 className="text-xl font-semibold">Type</h3>
+          <div className="mt-3">
+            {types?.map((type) => (
+              <div key={type.value} className="flex gap-x-1">
+                <input
+                  type="checkbox"
+                  checked={selectedTypes.includes(type.value)}
+                  onChange={() => handleCheckboxTypeChange(type.value)}
+                />
+                <span>{type.label}</span>
               </div>
             ))}
           </div>
@@ -291,6 +321,22 @@ const Home = () => {
             ))}
           </div>
         </div>
+        {/* types */}
+        <div className="bg-[#F5F5F5] p-4 rounded-sm">
+          <h3 className="text-xl font-semibold">Type</h3>
+          <div className="mt-3">
+            {types?.map((type) => (
+              <div key={type.value} className="flex gap-x-1">
+                <input
+                  type="checkbox"
+                  checked={selectedTypes.includes(type.value)}
+                  onChange={() => handleCheckboxTypeChange(type.value)}
+                />
+                <span>{type.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* right side */}
@@ -306,16 +352,34 @@ const Home = () => {
             Products ({data?.mobiles?.data?.length})
           </p>
           <div className="flex items-center flex-col md:flex-row">
+            <label htmlFor="sort">Show:</label>
+            <select
+              name="price"
+              id="sort"
+              className="md:p-1 border"
+              value={show}
+              onChange={(e) => setShow(e.target.value)}
+            >
+              <option value="10" selected>
+                10
+              </option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
+          </div>
+          <div className="flex items-center flex-col md:flex-row">
             <label htmlFor="sort">Sort By:</label>
             <select
               name="price"
               id="sort"
-              className="md:p-3 border"
+              className="md:p-2 border"
               value={selectedSort}
               onChange={(e) => setSelectedSort(e.target.value)}
             >
-              <option value="" disabled>
-                Sort
+              <option value="" selected>
+                Default
               </option>
               <option value="asc">Price: Low to High</option>
               <option value="desc">Price: High to Low</option>
@@ -329,12 +393,18 @@ const Home = () => {
             {data?.mobiles?.data?.length > 0 ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
                 {data?.mobiles?.data?.map((mobile) => (
-                  <div className="border shadow-md rounded" key={mobile.id}>
+                  <div className="border shadow-md rounded pb-3" key={mobile.id}>
                     <div className="overflow-hidden group">
                       <img src={mobile?.thumbnail} alt={mobile?.title} />
                       <div className="translate-y-11 group-hover:translate-y-0 transition-all duration-500">
                         <div className="w-full h-full flex justify-center bg-white mx-auto">
-                          <button className="text-black bg-white px-4 py-2 border hover:border-orange">
+                          <button
+                            onClick={() => {
+                              toast.success("Add to Cart Successful");
+                              dispatch(addToCart(mobile));
+                            }}
+                            className="text-black bg-white px-4 py-2 border hover:border-orange"
+                          >
                             <IoCartOutline className="w-6 h-6" />
                           </button>
                           <button className="text-black bg-white px-4 py-2 border hover:border-orange">
@@ -344,7 +414,7 @@ const Home = () => {
                       </div>
                     </div>
                     <div className="px-5">
-                      <h2 className="text-xl font-bold mb-2 hover:underline cursor-pointer">
+                      <h2 className="text-lg font-semibold mb-2 hover:underline cursor-pointer">
                         {mobile.title}
                       </h2>
                       <p>

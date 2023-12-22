@@ -21,9 +21,10 @@ const SignUp = () => {
     setSignUpError("");
     createUser(data.email, data.password)
       .then((result) => {
+        const user = result.user;
+        console.log(user);
         const userInfo = {
           displayName: data.name,
-          userInfo: data.role,
         };
 
         updateUser(userInfo)
@@ -45,7 +46,8 @@ const SignUp = () => {
     return signUpWithGoogle()
       .then((result) => {
         navigate("/");
-        // const user = result.user;
+        const user = result.user;
+        console.log(user);
         toast.success("User  Successfully Created");
       })
       .catch((err) => console.error(err));
@@ -66,8 +68,8 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex justify-center items-center my-20">
-      <div className="w-96 px-10 pb-5 border rounded bg-slate-100">
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="w-full mx-3 md:w-96 px-3 md:px-10 pb-5 border rounded bg-slate-100">
         <h2 className="text-2xl text-center text-gray-900 my-4 font-bold border-b pb-2">
           Please Signup
         </h2>

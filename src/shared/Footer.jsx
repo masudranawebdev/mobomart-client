@@ -1,140 +1,98 @@
-import { BiSolidMap } from "react-icons/bi";
-import { IoCallSharp } from "react-icons/io5";
-import { SiMinutemailer } from "react-icons/si";
-import { FaMapMarkedAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import footerLogo from "../assets/images/footerlogo.png";
-import { BsArrowRightShort } from "react-icons/bs";
-
-const useFullLink = [
-  { path: "#", label: "About-Us" },
-  { path: "#", label: "Site-map" },
-  { path: "#", label: "Privacy-Policy" },
-  { path: "#", label: "Terms-&-Conditions" },
-  { path: "#", label: "Office-Relocation-Service" },
-  { path: "#", label: "Moving-Tips" },
-];
-
+import {Link} from "react-router-dom";
 const Footer = () => {
-  const year = new Date().getFullYear();
-  const handleEmailClick = () => {
-    window.location.href = `mailto:masudranainfo99@gmail.com`;
-  };
   return (
-    <footer>
-      <div className="bg-hoverColor text-white border-t-[5px] border-primaryColor">
-        <div className="container py-10">
-          <div className="grid grid-cols-1 lg:grid-cols-5 md:grid-col-3 sm:grid-cols-2 gap-5">
-            <div>
-              <Link to={"/"}>
-                <figure>
-                  <img
-                    loading="lazy"
-                    src={footerLogo}
-                    alt="footerLogo"
-                    className="w-[250px] lg:w-full"
-                  />
-                </figure>
-              </Link>
-              <p className="text-[16px] leading-7 font-[400] text-white mt-4">
-                Welcome to PACK & SHIFT, We're a Domestic and International
-                Packers & Movers Service Provider. Supported Related House
-                shifting, Office Shifting any time anywhere in Dhaka and
-                Bangladesh. We provide quality packing and moving service
-                provider.
-              </p>
-            </div>
-            <ul className="list-none ml-0 mb-0">
-              <li className="leading-[30px] font-[500]">
-                <h2
-                  className="mb-6 text-primaryColor"
-                  style={{ fontSize: "22px" }}
-                >
-                  UseFull Link
-                </h2>
-              </li>
-              {useFullLink.map((item, index) => (
-                <li key={index} className="flex items-center mt-3">
-                  <BsArrowRightShort className="w-5 h-5 mr-1 inline-block" />
-                  <Link
-                    to={item.path}
-                    className="flex flex-col  text-[15px]  hover:underline hover:decoration-primaryColor"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-
-            <div>
-              <ul className="flex flex-col leading-8 cursor-pointer ml-0 mb-0 list-none">
-                <li className="text-[20px] leading-[30px] font-[500]">
-                  <h2 className="mb-6 text-primaryColor text-[22px]">
-                    Get in Touch
-                  </h2>
-                </li>
-                <li className="flex items-center gap-3 mb-2">
-                  <span>
-                    <BiSolidMap className="w-[2rem] h-9  text-white bg-primaryColor rounded-md" />
-                  </span>
-                  <address className="text-[16px] leading-7 font-[400] hover:underline hover:decoration-primaryColor">
-                  Dhaka - 1207, Bangladesh
-                  </address>
-                </li>
-                <li className="flex items-center gap-3 mb-2">
-                  <span>
-                    <IoCallSharp className="w-7 h-7  text-white bg-primaryColor rounded-md" />
-                  </span>
-                  <h3 className="text-[16px] leading-7 font-[400] hover:underline hover:decoration-primaryColor">
-                    +8801796682951
-                  </h3>
-                </li>
-                <li className="flex items-center gap-3 mb-2">
-                  <span>
-                    <SiMinutemailer className="w-[2rem] h-9 text-white bg-primaryColor rounded-md" />
-                  </span>
-                  <h3
-                    onClick={handleEmailClick}
-                    className="text-[16px] leading-7 font-[400] hover:underline hover:decoration-primaryColor"
-                  >
-                    masudranainfo99@gmail.com
-                  </h3>
-                </li>
-                <li className="flex items-center gap-3">
-                  <span>
-                    <FaMapMarkedAlt className="w-[2rem] h-9 text-white bg-primaryColor rounded-md" />
-                  </span>
-                  <h3 className="text-[16px] leading-7 font-[400]">
-                    <a
-                      href="https://goo.gl/maps/W8jkKJ1w7cFa3RSz8"
-                      target="_blank"
-                      className="hover:underline hover:decoration-primaryColor "
-                    >
-                      Find us in Google
-                    </a>
-                  </h3>
-                </li>
-              </ul>
-            </div>
+    <div className="bg-gray-200 border-t-2 border-primary py-10 text-black border-primaryColor">
+      <div className="container grid grid-cols-1 md:grid-cols-5 gap-7 md:gap-3 lg:gap-7 overflow-hidden font-sans">
+      {/* 1 */}
+      <div className="md:col-span-2 pr-10">
+        <Link href="/" className="underline cursor-pointer">
+          <span className="text-gray-950 uppercase text-3xl font-bold">MOBO</span>
+          <span className="text-gray-500 text-2xl font-medium">mart</span>
+        </Link>
+        <p className="text-[16px] 3xl:text-[18px] xl:leading-[27px] 3xl:leading-[24px] 5xl:leading-[36px] pt-3">
+          Lorem ipsum, or lipsum as it is sometimes kno wn, is dummy text used
+          in laying out print, gra phic or web designs.
+        </p>
+        <form>
+          <div className="flex mt-5 w-full">
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Enter your email"
+              className="w-full h-10 xl:h-10 text-sm 3xl:text-base pl-3 flex flex-1  border sm:text-sm rounded-l-md focus:ring border-primaryColor outline-none"
+            />
+            <button type="submit" className="flex cursor-pointer items-center px-3 pointer-events-none sm:text-sm rounded-r-md uppercase bg-primary text-white text-sm 3xl:text-base bg-primaryColor">
+              subscribe
+            </button>
           </div>
-        </div>
-        <div className="footer-social-bg">
-          <p className="text-[16px] text-center py-4 leading-7 font-[400] text-white">
-            copyright @ {year} developed by
-            <strong>
-              <a
-                href="https://mrmasud.netlify"
-                target="_blank"
-                className="hover:underline hover:decoration-primaryColor"
-              >
-                MRTECH
-              </a>
-            </strong>{" "}
-            | All right reserved
-          </p>
-        </div>
+        </form>
       </div>
-    </footer>
+      {/* 2 */}
+      <div>
+        <h3 className=" text-[17px] 3xl:text-[19px] font-semibold pb-5 uppercase">
+          MY ACCOUNT
+        </h3>
+        <ul className="space-y-2">
+          <li className=" text-[16px] 3xl:text-[18px] hover:text-primary cursor-pointer">
+            Order
+          </li>
+          <li className=" text-[16px] 3xl:text-[18px] hover:text-primary cursor-pointer">
+            Wish List
+          </li>
+          <li className=" text-[16px] 3xl:text-[18px] hover:text-primary cursor-pointer">
+            Track Order
+          </li>
+          <li className=" text-[16px] 3xl:text-[18px] hover:text-primary cursor-pointer">
+            Manage Account
+          </li>
+          <li className=" text-[16px] 3xl:text-[18px] hover:text-primary cursor-pointer">
+            Return Order
+          </li>
+        </ul>
+      </div>
+      {/* 2 */}
+      <div>
+        <h3 className=" text-[17px] 3xl:text-[19px] font-semibold pb-5 uppercase">
+          INFORMATION
+        </h3>
+        <ul className="space-y-2">
+          <li className=" text-[16px] 3xl:text-[18px] hover:text-primary cursor-pointer">
+            About us
+          </li>
+          <li className=" text-[16px] 3xl:text-[18px] hover:text-primary cursor-pointer">
+            Privacy Policy
+          </li>
+          <li className=" text-[16px] 3xl:text-[18px] hover:text-primary cursor-pointer">
+            Terms & Conditions
+          </li>
+          <li className=" text-[16px] 3xl:text-[18px] hover:text-primary cursor-pointer">
+            Contact Us
+          </li>
+          <li className=" text-[16px] 3xl:text-[18px] hover:text-primary cursor-pointer">
+            Return Order
+          </li>
+        </ul>
+      </div>
+      {/* 2 */}
+      <div>
+        <h3 className=" text-[17px] 3xl:text-[19px] font-semibold pb-5 uppercase">
+          CONTACT
+        </h3>
+        <ul className="space-y-3">
+          <li className=" text-[16px] 3xl:text-[18px]">
+            Location: Dhaka, Bangladesh
+          </li>
+          <li className=" text-[16px] 3xl:text-[18px]">
+            Mobile: +8801796682951
+          </li>
+          <li className=" text-[16px] 3xl:text-[18px]">
+            masudranainfo99@gmail.com
+          </li>
+        </ul>
+      </div>
+    </div>
+    </div>
   );
 };
 

@@ -67,3 +67,17 @@ export const getUniqueStatus = (mobiles) => {
     return uniqueStatus;
   }, []);
 };
+
+export const getUniqueType = (mobiles) => {
+  const typeSet = new Set();
+  return mobiles?.reduce((uniqueType, mobile) => {
+    if (!typeSet.has(mobile.type)) {
+      typeSet.add(mobile.type);
+      uniqueType.push({
+        label: mobile.type,
+        value: mobile.type,
+      });
+    }
+    return uniqueType;
+  }, []);
+};
